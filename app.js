@@ -27,11 +27,20 @@ app.post('/Order', async function (req, res) {
     var side = req.body.side;
     var price = req.body.price;
     var quantity = req.body.quantity;
-    var sequence=req.body.sequence;
-    var result = await fun.placeOrder(address, symbol, side, price, quantity,sequence)
+    var sequence = null;
+    var timeinforce = req.body.timeinforce;
+    var result = await fun.placeOrder(address, symbol, side, price, quantity, sequence, timeinforce)
     res.send(result);
 })
 
+app.post('/Token', async function (req, res) {
+    var address = req.body.address;
+    var symbol = req.body.symbol;
+    var tokenName = req.body.tokenName;
+    var totalSupply = req.body.totalSupply;
+    var result = await fun.issueToken(address, tokenName, symbol, totalSupply)
+    res.send(result);
+})
 
 
 
