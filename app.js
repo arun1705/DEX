@@ -21,6 +21,17 @@ app.post('/Balance', async function (req, res) {
     res.send(result);
 })
 
+
+
+app.post('/Token', async function (req, res) {
+    var address = req.body.address;
+    var symbol = req.body.symbol;
+    var tokenName = req.body.tokenName;
+    var totalSupply = req.body.totalSupply;
+    var result = await fun.issueToken(address, tokenName, symbol, totalSupply)
+    res.send(result);
+})
+
 app.post('/Order', async function (req, res) {
     var address = req.body.address;
     var symbol = req.body.symbol;
@@ -33,15 +44,23 @@ app.post('/Order', async function (req, res) {
     res.send(result);
 })
 
-app.post('/Token', async function (req, res) {
-    var address = req.body.address;
-    var symbol = req.body.symbol;
-    var tokenName = req.body.tokenName;
-    var totalSupply = req.body.totalSupply;
-    var result = await fun.issueToken(address, tokenName, symbol, totalSupply)
+app.post('/Market', async function (req, res) {
+    var offset = null;
+    var limit = 1000;
+    var result = await fun.getMarkets(offset, limit)
     res.send(result);
 })
 
+
+app.post('/Transfer', async function (req, res) {
+    var addressFrom = req.body.addressFrom;
+    var addressTo = req.body.addressTo;
+    var amount = req.body.amount;
+    var asset = req.body.asset;
+    var message = req.body.message;
+    var result = await fun.transfer(addressFrom, addressTo, amount, asset, message)
+    res.send(result);
+})
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
